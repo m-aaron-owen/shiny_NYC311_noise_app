@@ -25,21 +25,21 @@ function(input, output, session) {
         
         if (input$year1 == "All") {
             if (input$complaint1 == "All") {
-                x = noise2 %>% 
+                x = noise %>% 
                     filter(start_month == input$month) %>% 
                     na.omit()
             } else {
-                x = noise2 %>% 
+                x = noise %>% 
                     filter(start_month == input$month, Complaint.Type2 == input$complaint1) %>% 
                     na.omit()
             }
         } else {
             if (input$complaint1 == "All") {
-                x = noise2 %>% 
+                x = noise %>% 
                     filter(start_year == input$year1, start_month == input$month) %>% 
                     na.omit()
             } else {
-                x = noise2 %>% 
+                x = noise %>% 
                     filter(start_year == input$year1, start_month == input$month, Complaint.Type2 == input$complaint1) %>% 
                     na.omit()
             }
@@ -58,23 +58,23 @@ function(input, output, session) {
     output$bar2 = renderPlot({
         if (input$year1 == "All") {
             if (input$complaint1 == "All") {
-                x = noise2 %>%
+                x = noise %>%
                     group_by(Borough) %>%
                     summarise(count = n())
             } else {
-                x = noise2 %>% 
+                x = noise %>% 
                     filter(Complaint.Type2 == input$complaint1) %>%
                     group_by(Borough) %>%
                     summarise(count = n())
             }
         } else {
             if (input$complaint1 == "All") {
-                x = noise2 %>%
+                x = noise %>%
                     filter(start_year == input$year1) %>%
                     group_by(Borough) %>%
                     summarise(count = n())
             } else {
-                x = noise2 %>% 
+                x = noise %>% 
                     filter(Complaint.Type2 == input$complaint1, start_year == input$year1) %>%
                     group_by(Borough) %>%
                     summarise(count = n())
@@ -99,12 +99,12 @@ function(input, output, session) {
     output$bar = renderPlot({
         if (input$year1 == "All") {
             if (input$complaint1 == "All") {
-                x = noise2 %>%
+                x = noise %>%
                     group_by(Borough, sq_miles) %>%
                     summarise(count = n()) %>%
                     summarise(comp_per_mile = count/sq_miles)
             } else {
-                x = noise2 %>% 
+                x = noise %>% 
                     filter(Complaint.Type2 == input$complaint1) %>%
                     group_by(Borough, sq_miles) %>%
                     summarise(count = n()) %>%
@@ -112,13 +112,13 @@ function(input, output, session) {
             }
         } else {
             if (input$complaint1 == "All") {
-                x = noise2 %>%
+                x = noise %>%
                     filter(start_year == input$year1) %>%
                     group_by(Borough, sq_miles) %>%
                     summarise(count = n()) %>%
                     summarise(comp_per_mile = count/sq_miles)
             } else {
-                x = noise2 %>% 
+                x = noise %>% 
                     filter(Complaint.Type2 == input$complaint1, start_year == input$year1) %>%
                     group_by(Borough, sq_miles) %>%
                     summarise(count = n()) %>%
@@ -144,12 +144,12 @@ function(input, output, session) {
     output$bar3 = renderPlot({
         if (input$year1 == "All") {
             if (input$complaint1 == "All") {
-                x = noise2 %>%
+                x = noise %>%
                     group_by(Borough, pop) %>%
                     summarise(count = n()) %>%
                     summarise(comp_per_capita = count/pop)
             } else {
-                x = noise2 %>% 
+                x = noise %>% 
                     filter(Complaint.Type2 == input$complaint1) %>%
                     group_by(Borough, pop) %>%
                     summarise(count = n()) %>%
@@ -157,13 +157,13 @@ function(input, output, session) {
             }
         } else {
             if (input$complaint1 == "All") {
-                x = noise2 %>%
+                x = noise %>%
                     filter(start_year == input$year1) %>%
                     group_by(Borough, pop) %>%
                     summarise(count = n()) %>%
                     summarise(comp_per_capita = count/pop)
             } else {
-                x = noise2 %>% 
+                x = noise %>% 
                     filter(Complaint.Type2 == input$complaint1, start_year == input$year1) %>%
                     group_by(Borough, pop) %>%
                     summarise(count = n()) %>%
@@ -194,23 +194,23 @@ function(input, output, session) {
         if (input$year2 == "All") {
             if (input$boro == "All") {
                 if (input$complaint2 == "All") {
-                    bar = noise2 %>%
+                    bar = noise %>%
                         group_by_(input$grouped) %>% 
                         summarise(count = n())
                 } else {
-                    bar = noise2 %>% 
+                    bar = noise %>% 
                         filter(Complaint.Type2 == input$complaint2) %>% 
                         group_by_(input$grouped) %>% 
                         summarise(count = n())
                 }
             } else {
                 if (input$complaint2 == "All") {
-                    bar = noise2 %>% 
+                    bar = noise %>% 
                         filter(Borough == input$boro) %>% 
                         group_by_(input$grouped) %>% 
                         summarise(count = n())
                 } else {
-                    bar = noise2 %>% 
+                    bar = noise %>% 
                         filter(Borough == input$boro, Complaint.Type2 == input$complaint2) %>% 
                         group_by_(input$grouped) %>% 
                         summarise(count = n())
@@ -219,24 +219,24 @@ function(input, output, session) {
         } else {
             if (input$boro == "All") {
                 if (input$complaint2 == "All") {
-                    bar = noise2 %>% 
+                    bar = noise %>% 
                         filter(start_year == input$year2) %>% 
                         group_by_(input$grouped) %>% 
                         summarise(count = n())
                 } else {
-                    bar = noise2 %>% 
+                    bar = noise %>% 
                         filter(start_year == input$year2, Complaint.Type2 == input$complaint2) %>% 
                         group_by_(input$grouped) %>% 
                         summarise(count = n())
                 }
             } else {
                 if (input$complaint2 == "All") {
-                    bar = noise2 %>% 
+                    bar = noise %>% 
                         filter(start_year == input$year2, Borough == input$boro) %>% 
                         group_by_(input$grouped) %>% 
                         summarise(count = n())
                 } else {
-                    bar = noise2 %>% 
+                    bar = noise %>% 
                         filter(start_year == input$year2, Borough == input$boro, Complaint.Type2 == input$complaint2) %>% 
                         group_by_(input$grouped) %>% 
                         summarise(count = n())
@@ -282,7 +282,7 @@ function(input, output, session) {
     output$barPlot2 = renderPlot({
         if (input$boro == "All") {
             if (input$complaint2 == "All") {
-                bar = noise2 %>%
+                bar = noise %>%
                     group_by(start_year, Borough) %>%
                     summarise(count = n())
                 
@@ -296,7 +296,7 @@ function(input, output, session) {
                           axis.title.x = element_text(size = 14, face = "bold"), axis.title.y = element_blank()) +
                     scale_fill_brewer(type = "qual", palette = 7)
             } else {
-                bar = noise2 %>%
+                bar = noise %>%
                     filter(Complaint.Type2 == input$complaint2) %>%
                     group_by(start_year, Borough) %>%
                     summarise(count = n())
@@ -313,7 +313,7 @@ function(input, output, session) {
             }
         } else {
             if (input$complaint2 == "All") {
-                bar = noise2 %>%
+                bar = noise %>%
                     filter(Borough == input$boro) %>%
                     group_by(start_year) %>%
                     summarise(count = n())
@@ -329,7 +329,7 @@ function(input, output, session) {
                     scale_fill_brewer(type = "qual", palette = 7)
                 
             } else {
-                bar = noise2 %>%
+                bar = noise %>%
                     filter(Borough == input$boro, Complaint.Type2 == input$complaint2) %>%
                     group_by(start_year) %>%
                     summarise(count = n())
@@ -353,23 +353,23 @@ function(input, output, session) {
     output$horizontal_bar = renderPlot({
         if (input$year2 == "All") {
             if (input$boro == "All") {
-                x = noise2 %>% 
+                x = noise %>% 
                     group_by(Complaint.Type2) %>% 
                     summarise(count = n())
             } else {
-                x = noise2 %>% 
+                x = noise %>% 
                     filter(Borough == input$boro) %>% 
                     group_by(Complaint.Type2) %>% 
                     summarise(count = n())
             }
         } else {
             if (input$boro == "All") {
-                x = noise2 %>% 
+                x = noise %>% 
                     filter(start_year == input$year2) %>% 
                     group_by(Complaint.Type2) %>% 
                     summarise(count = n())
             } else {
-                x = noise2 %>% 
+                x = noise %>% 
                     filter(start_year == input$year2, Borough == input$boro) %>% 
                     group_by(Complaint.Type2) %>%
                     summarise(count = n())
@@ -402,17 +402,17 @@ function(input, output, session) {
     output$boxPlot_boro = renderPlot({
         if (input$year3 == "All") {
             if (input$complaint3 == "All") {
-                x = noise2 %>% filter(Complaint.Type != "Survey") %>% group_by(Borough)
+                x = noise %>% filter(Complaint.Type != "Survey") %>% group_by(Borough)
             } else {
-                x = noise2 %>% filter(Complaint.Type != "Survey", Complaint.Type2 == input$complaint3) %>% group_by(Borough)
+                x = noise %>% filter(Complaint.Type != "Survey", Complaint.Type2 == input$complaint3) %>% group_by(Borough)
             }
         } else {
             if (input$complaint3 == "All") {
-                x = noise2 %>% 
+                x = noise %>% 
                     filter(Complaint.Type != "Survey", start_year == input$year3) %>% 
                     group_by(Borough)
             } else {
-                x = noise2 %>% 
+                x = noise %>% 
                     filter(Complaint.Type != "Survey", start_year == input$year3, Complaint.Type2 == input$complaint3) %>% 
                     group_by(Borough)
             }
@@ -438,15 +438,15 @@ function(input, output, session) {
     output$boxPlot_complaint = renderPlot({
         if (input$year3 == "All") {
             if(input$boro2 == "All") {
-                x = noise2 %>% filter(Complaint.Type != "Survey")
+                x = noise %>% filter(Complaint.Type != "Survey")
             } else {
-                x = noise2 %>% filter(Complaint.Type != "Survey", Borough == input$boro2)
+                x = noise %>% filter(Complaint.Type != "Survey", Borough == input$boro2)
             }
         } else {
             if (input$boro2 == "All") {
-                x = noise2 %>% filter(Complaint.Type != "Survey", start_year == input$year3)
+                x = noise %>% filter(Complaint.Type != "Survey", start_year == input$year3)
             } else {
-                x = noise2 %>% filter(Complaint.Type != "Survey", Borough == input$boro2, start_year == input$year3)
+                x = noise %>% filter(Complaint.Type != "Survey", Borough == input$boro2, start_year == input$year3)
             }
         }
         

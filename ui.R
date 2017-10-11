@@ -1,4 +1,3 @@
-library(shinydashboard)
 
 #--------
 # renames numerical month variables as strings while retaining numeric class
@@ -64,7 +63,7 @@ navbarPage("NYC311 Noise Complaints", id = "map", theme = shinytheme("flatly"),
                                   sliderInput(inputId = "slider",
                                               label = "Sensitivity",
                                               min = 0, max = 2000,
-                                              value = 500)
+                                              value = 250)
                                 ),
                     absolutePanel(id = "controls2", class = "panel panel-default", fixed = T,
                                   draggable = TRUE, top = "10%", left = "auto", right = 20, bottom = "auto",
