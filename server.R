@@ -147,13 +147,13 @@ function(input, output, session) {
                 x = noise %>%
                     group_by(Borough, pop) %>%
                     summarise(count = n()) %>%
-                    summarise(comp_per_capita = count/pop)
+                    summarise(comp_per_capita = count/pop*100)
             } else {
                 x = noise %>% 
                     filter(Complaint.Type2 == input$complaint1) %>%
                     group_by(Borough, pop) %>%
                     summarise(count = n()) %>%
-                    summarise(comp_per_capita = count/pop)
+                    summarise(comp_per_capita = count/pop*100)
             }
         } else {
             if (input$complaint1 == "All") {
@@ -161,19 +161,19 @@ function(input, output, session) {
                     filter(start_year == input$year1) %>%
                     group_by(Borough, pop) %>%
                     summarise(count = n()) %>%
-                    summarise(comp_per_capita = count/pop)
+                    summarise(comp_per_capita = count/pop*100)
             } else {
                 x = noise %>% 
                     filter(Complaint.Type2 == input$complaint1, start_year == input$year1) %>%
                     group_by(Borough, pop) %>%
                     summarise(count = n()) %>%
-                    summarise(comp_per_capita = count/pop)
+                    summarise(comp_per_capita = count/pop*100)
             }
         }
         
         ggplot(x, aes(x = Borough, y = comp_per_capita)) + 
             geom_bar(aes(fill = Borough), stat = "identity", show.legend = F) +
-            labs(y = "Complaints per Capita") + theme(axis.title.x = element_blank()) + 
+            labs(y = "Complaints per 100 People") + theme(axis.title.x = element_blank()) + 
             scale_x_discrete(labels = c("BNX", "BKN", "MAN", "QNS", "STI")) + 
             scale_y_continuous(expand = c(0, 0), labels = scales::comma) +
             theme_bw() +
