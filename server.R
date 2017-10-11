@@ -1,8 +1,11 @@
 library(ggplot2)
-# library(egg)
 
 function(input, output, session) {
     
+
+#===================================
+# City Map Tab
+#===================================    
 
 #------------------
 # Base Map
@@ -178,6 +181,10 @@ function(input, output, session) {
                   axis.line = element_line(color = "black"))
         
     }, height = 200, width = 200)
+    
+#===================================
+# Complaint Trends Tab
+#===================================
     
 #---------
 # complaints by month/hour plot
@@ -382,42 +389,17 @@ function(input, output, session) {
                   axis.title.x = element_text(size = 14, face = "bold"), axis.title.y = element_blank()) +
             scale_fill_brewer(palette = "Spectral")
     })
-
-#---------- 
-# box plot
+    
+    
+#===================================
+# Resolution Times Tab
+#===================================
+    
 #----------
-    
-    output$boxPlot2 = renderPlot({
-        if (input$year3 == "All") {
-            if(input$boro2 == "All") {
-                x = noise2 %>% filter(Complaint.Type != "Survey")
-            } else {
-                x = noise2 %>% filter(Complaint.Type != "Survey", Borough == input$boro2)
-            }
-        } else {
-            if (input$boro2 == "All") {
-                x = noise2 %>% filter(Complaint.Type != "Survey", start_year == input$year3)
-            } else {
-                x = noise2 %>% filter(Complaint.Type != "Survey", Borough == input$boro2, start_year == input$year3)
-            }
-        }
-        
-        ggplot(x, aes(x = Complaint.Type2, y = (time_diff/60/60))) + 
-            geom_boxplot(aes(col = Complaint.Type2), show.legend = F) +
-            geom_boxplot(aes(fill = Complaint.Type2), show.legend = F, outlier.shape = 21) +
-            scale_y_log10(labels = scales::comma) + 
-            labs(y = "Log Time for\nComplaint Resolution in Hours", x = "Complaint Type") +
-            theme_bw() +
-            theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(),
-                  panel.grid.major.y = element_line(color = "gray"), panel.grid.minor.y = element_line(color = "gray"),
-                  axis.line = element_line(color = "black"), axis.text = element_text(size = 12),
-                  axis.text.x = element_text(angle = -45, vjust = 0.9, hjust = 0.1),
-                  axis.title = element_text(size = 14, face = "bold")) +
-            scale_fill_brewer(palette = "Spectral")
-        
-    }, height = 350)
-    
-    output$boxPlot_grid = renderPlot({
+# boxplot by boro
+#----------
+
+    output$boxPlot_boro = renderPlot({
         if (input$year3 == "All") {
             if (input$complaint3 == "All") {
                 x = noise2 %>% filter(Complaint.Type != "Survey") %>% group_by(Borough)
@@ -448,4 +430,38 @@ function(input, output, session) {
                   axis.title= element_text(size = 14, face = "bold"))
         
     }, height = 275)
+    
+#---------- 
+# box plot by complaint
+#----------
+    
+    output$boxPlot_complaint = renderPlot({
+        if (input$year3 == "All") {
+            if(input$boro2 == "All") {
+                x = noise2 %>% filter(Complaint.Type != "Survey")
+            } else {
+                x = noise2 %>% filter(Complaint.Type != "Survey", Borough == input$boro2)
+            }
+        } else {
+            if (input$boro2 == "All") {
+                x = noise2 %>% filter(Complaint.Type != "Survey", start_year == input$year3)
+            } else {
+                x = noise2 %>% filter(Complaint.Type != "Survey", Borough == input$boro2, start_year == input$year3)
+            }
+        }
+        
+        ggplot(x, aes(x = Complaint.Type2, y = (time_diff/60/60))) + 
+            geom_boxplot(aes(col = Complaint.Type2), show.legend = F) +
+            geom_boxplot(aes(fill = Complaint.Type2), show.legend = F, outlier.shape = 21) +
+            scale_y_log10(labels = scales::comma) + 
+            labs(y = "Log Time for\nComplaint Resolution in Hours", x = "Complaint Type") +
+            theme_bw() +
+            theme(panel.border = element_blank(), panel.grid.major.x = element_blank(), panel.grid.minor.x = element_blank(),
+                  panel.grid.major.y = element_line(color = "gray"), panel.grid.minor.y = element_line(color = "gray"),
+                  axis.line = element_line(color = "black"), axis.text = element_text(size = 12),
+                  axis.text.x = element_text(angle = -45, vjust = 0.9, hjust = 0.1),
+                  axis.title = element_text(size = 14, face = "bold")) +
+            scale_fill_brewer(palette = "Spectral")
+        
+    }, height = 350)
 }
