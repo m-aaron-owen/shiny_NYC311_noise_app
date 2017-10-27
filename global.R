@@ -6,4 +6,4 @@ library(leaflet.extras)
 library(ggplot2)
 library(shinythemes)
 
-noise = fread("noise_.csv", stringsAsFactors = F)
+noise = fread("noise2.csv", stringsAsFactors = F)

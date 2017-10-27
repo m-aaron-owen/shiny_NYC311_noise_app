@@ -1,0 +1,12 @@
+name: shiny_NYC311_noise_app
+title: shiny_NYC311_noise_app
+username:
+account: maaronowen
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 228942
+bundleId: 1043681
+url: https://maaronowen.shinyapps.io/shiny_NYC311_noise_app/
+when: 1508912787.32041
+asMultiple: FALSE
+asStatic: FALSE
